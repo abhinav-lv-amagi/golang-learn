@@ -4,12 +4,35 @@
 
 ## 12/02/2024
 
+- [x] Packages
 - [x] Variables
 - [x] Functions
 - [x] Receiver functions
 - [x] Multiple return values in Go functions
 
 Notes:
+
+- Packages are groupings of code, but don't actually require separate folders. For eg, we can use code from the same package, but from different files - without importing the necessary functions / variables.
+
+  ```go
+  // main.go
+  package main
+
+  import "fmt"
+
+  func main() {
+    var state string = getState() // defined in 'state.go'
+    fmt.Println(state)
+  }
+
+  // state.go
+  package main  // present in the same 'main' package
+
+  func getState() string {
+    return "stateful widget"
+  }
+
+  ```
 
 - Variables can be initialized in two ways:
 
