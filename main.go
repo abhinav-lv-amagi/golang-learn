@@ -3,8 +3,8 @@ package main
 import "fmt"
 
 func main() {
-	card := newCard()
-	fmt.Println(card)
+	// card := newCard()
+	// fmt.Println(card)
 	cardDeck()
 }
 
@@ -24,7 +24,10 @@ func slices() {
 }
 
 func cardDeck() {
-	cards := deck {"Queen of Hearts", newCard()}
+	// cards := deck {"Queen of Hearts", newCard()}
+	cards := newDeck()
+	hand, cards := cards.deal(3)
+	hand.print()
 	cards.print()
 }
 

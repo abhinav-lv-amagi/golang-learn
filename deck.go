@@ -22,3 +22,34 @@ func (d deck) print() {
 		fmt.Println(i, card)
 	}
 }
+
+// Generates a new deck of cards
+func newDeck() deck {
+	cards := deck{}
+
+	cardSuits := []string{"Spades", "Hearts", "Diamonds", "Clubs"}
+	cardValues := []string{"Ace", "Two", "Three", "Four"}
+
+	for _, cardSuit := range cardSuits {
+		for _, cardValue := range cardValues {
+			cards = append(cards, cardSuit + " of " + cardValue)
+		}
+	}
+
+	return cards
+}
+
+/*
+ * Function to deal a hand, so basically split the deck into two
+ * There are two functions below for the same purpose, the first of 
+ * which is my implementation. The second one uses:
+ * 
+ * Multiple Return Values - yes, Go functions can return multiple values.
+*/
+func (d deck) dealMyImpl(handSize int) []deck {
+	return []deck{d[:handSize], d[handSize:]}
+}
+
+func (d deck) deal(handSize int) (deck, deck) {
+	return d[:handSize], d[handSize:]
+}
