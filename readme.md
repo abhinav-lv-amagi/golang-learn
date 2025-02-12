@@ -14,8 +14,11 @@ Notes:
 - Variables can be initialized in two ways:
 
   ```go
-  a := "Abhinav"
+  // Standard way
   var b string = "Rishith"
+
+  // Note: This cannot be used at the package level, only inside functions
+  a := "Abhinav"
   ```
 
 - A slice is kind of a dynamic array
