@@ -1,3 +1,4 @@
 main
 learning-go
 **/*.txt
+.DS_Store
