@@ -296,17 +296,22 @@ Explained in pointers (read Slice). Refer to this table:
 
 - Ways to declare maps:
 
-- - Zero value initialisation using `var` keyword:
+  - Zero value initialisation using `var` keyword:
+
     ```go
       var colors map[string]string
       fmt.Println("Zero value initialization using `var` keyword:", colors)
     ```
-- - Zero value initialisation using `make` function:
+
+  - Zero value initialisation using `make` function:
+
     ```go
       colors := make(map[string]string)
       fmt.Println("Zero value initialization using `make` function:", colors)
     ```
-- - Initialisation using keys and values:
+
+  - Initialisation using keys and values:
+
     ```go
     colors := map[string]string {
       "red": "hot",
