@@ -275,8 +275,59 @@ Explained in pointers (read Slice). Refer to this table:
 
 ## 19/02/2025
 
+- [x] Maps
 - [x] Interfaces
 - [x] Reader and Writer Interface
+
+### Maps
+
+- Basic key-value pair map, similar to other languages. Eg:
+
+  ```go
+    colors := map[string]string {
+      "red": "hot",
+      "yellow": "dirty",
+      "green": "tabtabitab",
+      "blue": "go",
+      "orange": "bajrangbali",
+    }
+    fmt.Println(colors)
+  ```
+
+- Ways to declare maps:
+
+- - Zero value initialisation using `var` keyword:
+    ```go
+      var colors map[string]string
+      fmt.Println("Zero value initialization using `var` keyword:", colors)
+    ```
+- - Zero value initialisation using `make` function:
+    ```go
+      colors := make(map[string]string)
+      fmt.Println("Zero value initialization using `make` function:", colors)
+    ```
+- - Initialisation using keys and values:
+    ```go
+    colors := map[string]string {
+      "red": "hot",
+      "yellow": "dirty",
+    }
+    // adding a key after initialisation
+    colors["blue"] = "cool"
+    ```
+
+- Deleting keys:
+
+  ```go
+  delete(colors, "red")
+  ```
+
+- Iterating over maps:
+  ```go
+  for key, value := range colors {
+  	fmt.Println(key, ":", value)
+  }
+  ```
 
 ### Interfaces
 
