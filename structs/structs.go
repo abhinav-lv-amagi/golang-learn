@@ -65,7 +65,7 @@ func EmbeddedStructs() {
 	jim.introduce()
 }
 
-func Execute() {
+func StructEntry() {
 	// EmbeddedStructs()
 	WhyPointers()
 }

@@ -81,6 +81,14 @@ Notes:
   cards.print()
   ```
 
+  In case we don't need to actually use the instance of the custom type in the receiver function, we can just mention the type, like so:
+
+  ```go
+  func (deck) someFunc() {
+    fmt.Println("Some func")
+  }
+  ```
+
   > See if we can do this to primitive types in Go as well.
 
 ## 17/02/2025
@@ -264,3 +272,126 @@ Explained in pointers (read Slice). Refer to this table:
 | string         | chan int (`Channels`)  |
 | array ([5]int) | func() (`Function`)    |
 | struct         | interface{}            |
+
+## 19/02/2025
+
+- [x] Interfaces
+- [x] Reader and Writer Interface
+
+### Interfaces
+
+- Interfaces are basically contracts that structs can "implement", so that these structs can be used as arguments to functions that expect objects of that interface.
+
+- Eg:
+
+  ```go
+  type englishBot struct{}
+  type spanishBot struct{}
+
+  /*
+  * To whom it may concern, our program has a new type called 'bot'
+  * If you are a type in this program with a function called `getGreeting`,
+  * and it returns a string then you are now an honorary member of type `bot`.
+  * Now, you can call any function that accepts a type `bot` with your type.
+  */
+  type bot interface {
+    getGreeting() string
+
+    // If we wanted to mention arg types and multiple return types:
+    // getGreeting(string, int) (string, error)
+  }
+
+  func (englishBot) getGreeting() string {
+    return "Hello there!"
+  }
+
+  func (spanishBot) getGreeting() string {
+    return "Hola!"
+  }
+
+  func printGreeting(b bot) {
+    fmt.Println(b.getGreeting())
+  }
+
+  func InterfaceEntry() {
+    eb := englishBot{}
+    sb := spanishBot{}
+    printGreeting(eb)
+    printGreeting(sb)
+  }
+  ```
+
+- Interfaces are implicit. That is, you don't need to specify that a struct implements an interface. Go handles that for you automatically based on the function signatures that are implemented for a struct and defined in an interface. Just make sure that the `name`, `argument types` and `return types` are corresponding.
+
+### Reader and Writer Interface
+
+- The `Reader` and `Writer` are interfaces that are inbuilt in Go to help read in data from multiple sources and write out data to multiple targets.
+
+- Specifically, we're talking about [`io.Reader`](https://pkg.go.dev/io#Reader) and [`io.Writer`](https://pkg.go.dev/io#Writer).
+
+- `Reader` interface:
+
+  ```go
+  type Reader interface {
+    Read(p []byte) (n int, err error)
+  }
+  ```
+
+- `Writer` interface:
+
+  ```go
+  type Writer interface {
+    Write(p []byte) (n int, err error)
+  }
+  ```
+
+- Eg:
+
+  ```go
+  func makeGetReq() {
+    // http get req
+    resp, err := http.Get("http://google.com")
+    if err != nil {
+      fmt.Println("Error:", err)
+      return err
+    }
+
+    // make an empty byte slice of size 99999
+    bs := make([]byte, 99999)
+
+    // pass byte slice to Read function implemented by resp.Body
+    resp.Body.Read(bs)
+
+    // now byte slice will have the content of resp.Body
+    fmt.Println(string(bs))
+  }
+  ```
+
+- [`io.Copy`](https://pkg.go.dev/io#Copy):
+
+  ```go
+  func Copy(dst Writer, src Reader) (written int64, err error)
+  ```
+
+  Using this we can skip creating a byte slice and directly pass a type that implements the `Reader` interface and `Writer` interface. Eg:
+
+  ```go
+  io.Copy(os.Stdout, resp.Body)
+  ```
+
+- We can create our own types that implement these interfaces. Eg:
+
+  ```go
+  type LogWriter struct{}
+
+  func (LogWriter) Write(bs []byte) (int, error) {
+    fmt.Println(string(bs))
+    fmt.Println("Just wrote this many bytes:", len(bs))
+    return len(bs), nil
+  }
+
+  func main() {
+    lw := LogWriter{}
+    io.Copy(lw, resp.Body)
+  }
+  ```
